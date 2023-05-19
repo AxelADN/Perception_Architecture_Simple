@@ -18,10 +18,17 @@ public class SymbolArray {
 	private boolean[] array;
 	private int size;
 	private ArrayList<Boolean> auxArray;
+	private Symbol symbol;
 
 	public SymbolArray() {
 		this.size = 0;
 		this.auxArray = new ArrayList<>();
+		this.symbol = new Symbol();
+	}
+	
+	public SymbolArray(String symbolStr0){
+		this();
+		this.symbol = new Symbol(symbolStr0);
 	}
 
 	public void add(double value0) {
@@ -66,6 +73,10 @@ public class SymbolArray {
 
 	public boolean get(int i) {
 		return this.array[i];
+	}
+
+	public Symbol getSymbol() {
+		return this.symbol;
 	}
 
 }

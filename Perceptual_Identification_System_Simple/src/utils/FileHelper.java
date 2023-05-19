@@ -56,7 +56,9 @@ public class FileHelper {
 		String path;
 		Mat mat;
 		for (String dirType : this.dataFilesTypeMap.keySet()) {
+			System.out.println("aslfknafls");
 			for (File dataFile : this.dataFilesTypeMap.get(dirType)) {
+				
 				path = this.dataRootFile + dirType + "/" + dataFile.getName();
 				mat = Imgcodecs.imread(path, Imgcodecs.IMREAD_ANYCOLOR);
 				this.mainSize = new Reference2D(mat.cols(), mat.rows());
