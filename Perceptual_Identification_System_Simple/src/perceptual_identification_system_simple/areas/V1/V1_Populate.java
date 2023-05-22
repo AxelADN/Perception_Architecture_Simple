@@ -25,7 +25,7 @@ public class V1_Populate extends ProcessTemplate {
 	public V1_Populate() {
 		this.ID = Names.V1_Populate;
 		this.fileHelper = new FileHelper();
-		this.rootFile = "/home/axeladn/Documents/Tesis_Doctorado/Preprocessed_DataSet/DataSet4/V1";
+		this.rootFile = "/home/axeladn/Documents/Tesis_Doctorado/Perception_System/Sensory_Data_Set/V1/";
 		this.excentricityMap = new HashMap<>();
 		
 	}
@@ -37,11 +37,15 @@ public class V1_Populate extends ProcessTemplate {
 		fileHelper.setDataFileList();
 		fileHelper.extractDataFromFileList();
 		convertToSymbols(fileHelper.setExcentricity());
+                this.send("FOVEA");
+                
 
 	}
 
 	private void convertToSymbols(HashMap<String, HashMap> matMap0) {
+            
 		for (String excentricity : matMap0.keySet()) {
+                    
 			HashMap<String, Mat> mats = matMap0.get(excentricity);
 			SymbolMatrix matrix = new SymbolMatrix();
 			for (String path : mats.keySet()) {
@@ -49,12 +53,22 @@ public class V1_Populate extends ProcessTemplate {
 				double[] matArray = new double[currentMat.channels() * (int) currentMat.total()];
 				currentMat.get(0, 0, matArray);
 				SymbolArray array = new SymbolArray(path);
+                                
 				array.add(matArray);
 				matrix.add(array);
 			}
+                        
 			matrix.consolidate();
+                        System.out.println(excentricity);
+                        matrix.print();
 			this.excentricityMap.put(excentricity, matrix);
 		}
 	}
+        
+        
+        private void send(String excentricity0){
+            SymbolMatrix currentMatrix = this.excentricityMap.get(excentricity0);
+            byte[] matrixBytes = currentMatrix.toBytes();
+        }
 
 }

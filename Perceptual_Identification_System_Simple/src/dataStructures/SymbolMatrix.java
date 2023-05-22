@@ -4,6 +4,7 @@
  */
 package dataStructures;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -13,13 +14,18 @@ import java.util.List;
  *
  * @author axeladn
  */
-public class SymbolMatrix {
+public class SymbolMatrix implements Serializable {
 	
 	boolean[][] matrix;
 	HashMap<Symbol,SymbolArray> auxMatrix;
+        int sizeX;
+        int sizeY;
 	
 	public SymbolMatrix(){
 		this.auxMatrix = new HashMap<>();
+                this.matrix = new boolean[][]{};
+                this.sizeX =0;
+                this.sizeY=0;
 	}
 	
 	public void add(SymbolArray array0){
@@ -28,9 +34,9 @@ public class SymbolMatrix {
 	}
 	
 	public void consolidate(){
-		int sizeX = ((SymbolArray)this.auxMatrix.values().toArray()[0]).size();
-		int sizeY = this.auxMatrix.size();
-		matrix = new boolean[sizeX][sizeY];
+		this.sizeX = ((SymbolArray)this.auxMatrix.values().toArray()[0]).size();
+		this.sizeY = this.auxMatrix.size();
+		this.matrix = new boolean[sizeX][sizeY];
 		for(int j=0; j<sizeY;j+=1){
 			List<Symbol> orderedSymbols = new ArrayList<Symbol>(this.auxMatrix.keySet());
 			Collections.sort(orderedSymbols,new SymbolComparator());
@@ -39,17 +45,25 @@ public class SymbolMatrix {
 			}
 		}
 		this.auxMatrix = null;
-		System.out.println("[");
+		
+	}
+        
+        public void print(){
+            System.out.print("[");
 		for(int j=0; j<sizeY;j+=1){
-			System.out.println("[");
+			System.out.print("[");
 			for(int i=0; i<sizeX;i+=1){
-				System.out.print(this.matrix[i][j]);
-				System.out.print(",");
+				System.out.print(this.matrix[i][j]?1:0);
 			}
 			System.out.println("],");
 		}
 		System.out.println("]");
-	}
+        }
+
+    public byte[] toBytes() {
+        //return SerializationUtils
+        return new byte[]{};
+    }
 	
 }
 

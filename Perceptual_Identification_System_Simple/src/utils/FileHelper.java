@@ -9,6 +9,7 @@ import dataStructures.Reference2D;
 import java.io.File;
 import java.util.HashMap;
 import org.opencv.core.Core;
+import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.Rect;
 import org.opencv.core.Size;
@@ -45,10 +46,12 @@ public class FileHelper {
 	}
 
 	public void setDataFileList() {
+            
 		for (String dir : this.typeDirectories) {
 			File currentDir = new File(this.dataRootFile + dir + "/");
 			File[] files = currentDir.listFiles();
 			this.dataFilesTypeMap.put(dir, files);
+                        
 		}
 	}
 
@@ -56,11 +59,13 @@ public class FileHelper {
 		String path;
 		Mat mat;
 		for (String dirType : this.dataFilesTypeMap.keySet()) {
-			System.out.println("aslfknafls");
+			
 			for (File dataFile : this.dataFilesTypeMap.get(dirType)) {
 				
 				path = this.dataRootFile + dirType + "/" + dataFile.getName();
+                                
 				mat = Imgcodecs.imread(path, Imgcodecs.IMREAD_ANYCOLOR);
+                                mat.convertTo(mat, CvType.CV_64F);
 				this.mainSize = new Reference2D(mat.cols(), mat.rows());
 				/*Imgproc.adaptiveThreshold(mat, mat, 255,
                         Imgproc.ADAPTIVE_THRESH_MEAN_C,
