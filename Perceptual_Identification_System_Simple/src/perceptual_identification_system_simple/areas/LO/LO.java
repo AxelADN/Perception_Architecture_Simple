@@ -4,10 +4,8 @@
  */
 package perceptual_identification_system_simple.areas.LO;
 
-import perceptual_identification_system_simple.areas.V1.*;
 import Config.AreaTemplate;
 import Config.Names;
-import static Config.Names.V1_Populate;
 
 /**
  *

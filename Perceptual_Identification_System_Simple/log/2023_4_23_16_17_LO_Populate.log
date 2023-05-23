@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE rootElement>
+<log>
+<record><time><hour>16</hour><minute>17</minute><second>39</second><milisecond>224</milisecond></time><data><receive> <sender> <name>V1_Populate</name></sender> </receive></data></record>
+</log>

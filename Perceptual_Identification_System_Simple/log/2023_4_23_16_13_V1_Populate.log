@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE rootElement>
+<log>
+<record><time><hour>16</hour><minute>13</minute><second>48</second><milisecond>429</milisecond></time><data><SEND><to>LO_Populate</to></SEND></data></record>
+<record><time><hour>16</hour><minute>13</minute><second>48</second><milisecond>429</milisecond></time><data><INFO>NOT FOUND, Looking for:LO_Populate</INFO></data></record>
+</log>

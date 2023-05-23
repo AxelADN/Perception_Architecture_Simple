@@ -4,10 +4,11 @@
  */
 package perceptual_identification_system_simple;
 
-import static Config.Names.V1;
+
 import org.opencv.core.Core;
 import perceptual_identification_system_simple.areas.V1.V1;
 import cFramework.nodes.service.Igniter;
+import perceptual_identification_system_simple.areas.LO.LO;
 
 /**
  *
@@ -17,6 +18,7 @@ public class Perceptual_Identification_System_Simple extends Igniter{
 	
 	public  Perceptual_Identification_System_Simple(){
 		addArea(V1.class.getName());
+		addArea(LO.class.getName());
 
 		configuration.setLocal(true);
 		configuration.setDebug(Boolean.TRUE);
