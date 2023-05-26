@@ -5,10 +5,7 @@
 package dataStructures;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  *
@@ -16,57 +13,79 @@ import java.util.List;
  */
 public class SymbolMatrix implements Serializable {
 
-	boolean[][] matrix;
-	HashMap<Symbol, SymbolArray> auxMatrix;
+	//boolean[][] matrix;
+	HashMap<Symbol, SymbolArray> hashMatrix;
 	int sizeX;
 	int sizeY;
 
 	public SymbolMatrix() {
-		this.auxMatrix = new HashMap<>();
-		this.matrix = new boolean[][]{};
+		this.hashMatrix = new HashMap<>();
+		//this.matrix = null;
 		this.sizeX = 0;
 		this.sizeY = 0;
 	}
 
 	public void add(SymbolArray array0) {
 		Symbol auxSymbol = array0.getSymbol();
-		this.auxMatrix.put(auxSymbol, array0);
+		this.hashMatrix.put(auxSymbol, array0);
+		this.sizeY = this.hashMatrix.size();
+		this.sizeX = array0.length();
 	}
 
-	public void consolidate() {
-		this.sizeX = ((SymbolArray) this.auxMatrix.values().toArray()[0]).size();
-		this.sizeY = this.auxMatrix.size();
+	/*public void consolidate() {
+		this.sizeX = ((SymbolArray) this.hashMatrix.values().toArray()[0]).size();
+		this.sizeY = this.hashMatrix.size();
 		this.matrix = new boolean[sizeX][sizeY];
 		for (int j = 0; j < sizeY; j += 1) {
-			List<Symbol> orderedSymbols = new ArrayList<Symbol>(this.auxMatrix.keySet());
+			List<Symbol> orderedSymbols = new ArrayList<>(this.hashMatrix.keySet());
 			Collections.sort(orderedSymbols, new SymbolComparator());
 			for (int i = 0; i < sizeX; i += 1) {
-				this.matrix[i][j] = this.auxMatrix.get(orderedSymbols.get(j)).get(i);
+				this.matrix[i][j] = this.hashMatrix.get(orderedSymbols.get(j)).get(i);
 			}
 		}
-		this.auxMatrix = null;
+		this.hashMatrix = null;
 
-	}
+	}*/
 
 	public void print() {
+		/*if (this.matrix != null) {
+			System.out.print("[");
+			for (int j = 0; j < sizeY; j += 1) {
+				System.out.print("[");
+				for (int i = 0; i < sizeX; i += 1) {
+					System.out.print(this.matrix[i][j] ? 1 : 0);
+				}
+				System.out.println("],");
+			}
+			System.out.println("]");
+			return;
+		}*/
 		System.out.print("[");
-		for (int j = 0; j < sizeY; j += 1) {
+		for (Symbol j : this.hashMatrix.keySet()) {
 			System.out.print("[");
 			for (int i = 0; i < sizeX; i += 1) {
-				System.out.print(this.matrix[i][j] ? 1 : 0);
+				System.out.print(this.hashMatrix.get(j).get(i) ? 1 : 0);
 			}
 			System.out.println("],");
 		}
 		System.out.println("]");
+
 	}
 
 	public SymbolMatrix subMatrix(int ii0, int jj0, RetinotopicPatch patch0) {
+		SymbolMatrix newMatrix = new SymbolMatrix();
 		int originX = patch0.getIndexPos(ii0, jj0).getX();
 		int originY = patch0.getIndexPos(ii0, jj0).getY();
-		int size = patch0.getBlockSize()*this.sizeX;
-		for (int ii = 0; ii < sizeX; ii += 1) {
-			for (int jj = 0; jj < sizeY; jj += 1) {
-				
+		int size;
+		SymbolArray currentArray;
+		for (Symbol sym : this.hashMatrix.keySet()) {
+			currentArray = this.hashMatrix.get(sym);
+			currentArray.subArray(ii0,jj0, patch0);
+			size = (int) (patch0.getBlockSize() * currentArray.size());
+			for (int ii = 0+originX; ii < originX+size; ii += 1) {
+				for (int jj = 0+originY; jj < originY+size; jj += 1) {
+					
+				}
 			}
 		}
 	}

@@ -64,7 +64,7 @@ public class FileHelper {
 				
 				path = this.dataRootFile + dirType + "/" + dataFile.getName();
                                 
-				mat = Imgcodecs.imread(path, Imgcodecs.IMREAD_ANYCOLOR);
+				mat = Imgcodecs.imread(path, Imgcodecs.IMREAD_GRAYSCALE);
                                 mat.convertTo(mat, CvType.CV_64F);
 				this.mainSize = new Reference2D(mat.cols(), mat.rows());
 				/*Imgproc.adaptiveThreshold(mat, mat, 255,

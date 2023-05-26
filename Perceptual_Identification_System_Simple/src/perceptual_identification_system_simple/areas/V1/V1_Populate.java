@@ -63,7 +63,7 @@ public class V1_Populate extends ProcessTemplate {
 				matrix.add(array);
 			}
 
-			matrix.consolidate();
+			//matrix.consolidate();
 			//System.out.println(excentricity);
 			//matrix.print();
 			this.excentricityMap.put(excentricity, matrix);
