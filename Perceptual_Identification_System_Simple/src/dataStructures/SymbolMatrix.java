@@ -74,20 +74,14 @@ public class SymbolMatrix implements Serializable {
 
 	public SymbolMatrix subMatrix(int ii0, int jj0, RetinotopicPatch patch0) {
 		SymbolMatrix newMatrix = new SymbolMatrix();
-		int originX = patch0.getIndexPos(ii0, jj0).getX();
-		int originY = patch0.getIndexPos(ii0, jj0).getY();
-		int size;
 		SymbolArray currentArray;
+		SymbolArray newArray;
 		for (Symbol sym : this.hashMatrix.keySet()) {
 			currentArray = this.hashMatrix.get(sym);
-			currentArray.subArray(ii0,jj0, patch0);
-			size = (int) (patch0.getBlockSize() * currentArray.size());
-			for (int ii = 0+originX; ii < originX+size; ii += 1) {
-				for (int jj = 0+originY; jj < originY+size; jj += 1) {
-					
-				}
-			}
+			newArray = currentArray.subArray(ii0,jj0, patch0);
+			newMatrix.add(newArray);
 		}
+		return newMatrix;
 	}
 
 }

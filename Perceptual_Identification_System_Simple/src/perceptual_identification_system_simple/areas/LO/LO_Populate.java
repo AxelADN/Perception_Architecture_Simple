@@ -59,6 +59,8 @@ public class LO_Populate extends ProcessTemplate {
 		SymbolMatrix subMatrix;
 		int sizeX;
 		int sizeY;
+		List<Integer> index;
+		HashMap<List<Integer>,SymbolMatrix> symbolMatrixMatrix = new HashMap<>();
 		for(int i=1; i<=8;i+=1){
 			patch = new RetinotopicPatch(i);
 			sizeX = patch.getSize().getSizeX();
@@ -66,6 +68,8 @@ public class LO_Populate extends ProcessTemplate {
 			for(int ii=0; ii<sizeX; ii+=1){
 				for(int jj=0; jj<sizeY; jj+=1){
 					subMatrix = matrix.subMatrix(ii,jj,patch);
+					List
+					symbolMatrixMatrix.put(key, matrix)
 				}
 			}
 			
