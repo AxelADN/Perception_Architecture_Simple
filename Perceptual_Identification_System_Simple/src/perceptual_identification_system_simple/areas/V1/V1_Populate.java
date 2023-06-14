@@ -4,9 +4,6 @@
  */
 package perceptual_identification_system_simple.areas.V1;
 
-import Config.Names;
-import Config.ProcessTemplate;
-import cFramework.communications.spikes.LongSpike;
 import dataStructures.SymbolArray;
 import dataStructures.SymbolMatrix;
 import java.io.IOException;
@@ -15,39 +12,39 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.opencv.core.Mat;
 import utils.FileHelper;
+import utils.LongSpike;
 
 /**
  *
  * @author axeladn
  */
-public class V1_Populate extends ProcessTemplate {
+public class V1_Populate  {
 
-	public static int eventIndex = 0;
-	private FileHelper fileHelper;
-	private String rootFile;
-	private HashMap<String, SymbolMatrix> excentricityMap;
+	public static int eventIndex = 0;	
+	
+	private static FileHelper fileHelper;
+	private static String rootFile;
+	private static HashMap<String, SymbolMatrix> excentricityMap;
 
-	public V1_Populate() {
-		this.ID = Names.V1_Populate;
-		this.fileHelper = new FileHelper();
-		this.rootFile = "/home/axeladn/Documents/Tesis_Doctorado/Perception_System/Sensory_Data_Set/V1/";
-		this.excentricityMap = new HashMap<>();
+	static{
+		fileHelper = new FileHelper();
+		rootFile = V1_Metadata.rootFile;
+		excentricityMap = new HashMap<>();
 
 	}
-
-	@Override
-	public void init() {
-
+	
+	public static byte[] run() {
 		fileHelper.setPath(rootFile);
 		fileHelper.setDataFileList();
 		fileHelper.extractDataFromFileList();
 		convertToSymbols(fileHelper.setExcentricity());
 		V1_Populate.eventIndex += 1;
-		this.send("FOVEA");
-
+		System.out.println("	asdasdssfsfsfsfsfsfsf");
+		System.out.println("break");
+		return sendFovea();
 	}
 
-	private void convertToSymbols(HashMap<String, HashMap> matMap0) {
+	private static void convertToSymbols(HashMap<String, HashMap> matMap0) {
 
 		for (String excentricity : matMap0.keySet()) {
 
@@ -66,18 +63,21 @@ public class V1_Populate extends ProcessTemplate {
 			//matrix.consolidate();
 			//System.out.println(excentricity);
 			//matrix.print();
-			this.excentricityMap.put(excentricity, matrix);
+			excentricityMap.put(excentricity, matrix);
 		}
 	}
 
-	private void send(String excentricity0) {
-		SymbolMatrix currentMatrix = this.excentricityMap.get(excentricity0);
-		LongSpike spike = new LongSpike(0, 0, currentMatrix, V1_Populate.eventIndex);
+	private static byte[] sendFovea() {
 		try {
-			super.send(Names.LO_Populate, spike.getByteArray());
+			String excentricity0 = "FOVEA";
+			SymbolMatrix currentMatrix = excentricityMap.get(excentricity0);
+			LongSpike spike = new LongSpike(currentMatrix, V1_Populate.eventIndex);
+			
+			return spike.getByteArray();
 		} catch (IOException ex) {
 			Logger.getLogger(V1_Populate.class.getName()).log(Level.SEVERE, null, ex);
 		}
+		return null;
 	}
 
 }

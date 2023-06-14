@@ -18,6 +18,8 @@ public class V1_Metadata {
 	public static final String PARAFOVEA = "PARAFOVEA";
 	public static final String PERIFOVEA = "PERIFOVEA";
 	public static final Dictionary dict = new Dictionary("V1");
+	public static final String rootFile = "/home/axeladn/Documents/Tesis_Doctorado/Perception_System/Sensory_Data_Set/V1/";
+
 
 	static {
 		double[] foveaPatch = new double[]{0.33, 0.33, 0.33, 0.33};

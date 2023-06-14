@@ -4,11 +4,13 @@
  */
 package dataStructures;
 
+import java.io.Serializable;
+
 /**
  *
  * @author axeladn
  */
-public class Symbol {
+public class Symbol  implements Serializable{
 
 	private final int symbol;
 

@@ -5,12 +5,13 @@
 package dataStructures;
 
 import Config.Config;
+import java.io.Serializable;
 
 /**
  *
  * @author axeladn
  */
-public class SymbolArray {
+public class SymbolArray implements Serializable {
 
 	private boolean[][] array;
 	private int length;
@@ -92,16 +93,23 @@ public class SymbolArray {
 
 	public SymbolArray subArray(int ii0, int jj0, RetinotopicPatch patch0) {
 		int newSize = (int) (patch0.getBlockSize() * this.size);
-		int originX = patch0.getIndexPos(ii0, jj0).getX();
-		int originY = patch0.getIndexPos(ii0, jj0).getY();
+		Reference2D posFactor = patch0.getIndexPos(ii0, jj0);
+		int originX = (int) Math.floor(posFactor.getFactorX()*this.size);
+		int originY = (int) Math.floor(posFactor.getFactorY()*this.size);
 		boolean[][] newBooleanMatrix = new boolean[newSize][newSize];
 		int i=0;
 		int j=0;
+		//System.out.println("newSize =" + newSize);
+		//System.out.println("thisSize =" + this.size);
+		//System.out.println("Origins = ( " +originX+" , "+originY+" )" );
 		for (int jj = 0 + originX; jj < originX + newSize; jj += 1) {
 			for (int ii = 0 + originY; ii < originY + newSize; ii += 1) {
+				//System.out.println("index_a: ( " + i + " , " + j +" )");
+				//System.out.println("index_aa: ( " + ii + " , " + jj +" )");
 				newBooleanMatrix[i][j] = this.array[ii][jj];
 				i+=1;
 			}
+			i=0;
 			j+=1;
 		}
 		SymbolArray newSymbolArray = new SymbolArray(this.symbol);
