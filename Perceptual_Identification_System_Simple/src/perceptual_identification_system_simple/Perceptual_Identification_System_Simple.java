@@ -16,7 +16,8 @@ import perceptual_identification_system_simple.areas.V1.V1;
 public class Perceptual_Identification_System_Simple {
 	
 	public  Perceptual_Identification_System_Simple(){
-		byte[] V1_data = V1.Populate();
+		V1 v1 = new V1();
+		v1.Populate();
 		byte[] LO_data = LO.Populate(V1_data);
 		
 	}

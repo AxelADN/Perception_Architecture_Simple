@@ -4,6 +4,7 @@
  */
 package perceptual_identification_system_simple.areas.V1;
 
+import config.ProcessInterface;
 import dataStructures.SymbolArray;
 import dataStructures.SymbolMatrix;
 import java.io.IOException;
@@ -18,22 +19,24 @@ import utils.LongSpike;
  *
  * @author axeladn
  */
-public class V1_Populate  {
+public class V1_Populate implements ProcessInterface {
 
-	public static int eventIndex = 0;	
-	
-	private static FileHelper fileHelper;
-	private static String rootFile;
-	private static HashMap<String, SymbolMatrix> excentricityMap;
+	public static int eventIndex = 0;
 
-	static{
+	private FileHelper fileHelper;
+	private String rootFile;
+	private HashMap<String, SymbolMatrix> excentricityMap;
+	private Data data;
+
+	public V1_Populate() {
 		fileHelper = new FileHelper();
 		rootFile = V1_Metadata.rootFile;
 		excentricityMap = new HashMap<>();
 
 	}
-	
-	public static byte[] run() {
+
+	@Override
+	public void run() {
 		fileHelper.setPath(rootFile);
 		fileHelper.setDataFileList();
 		fileHelper.extractDataFromFileList();
@@ -44,7 +47,7 @@ public class V1_Populate  {
 		return sendFovea();
 	}
 
-	private static void convertToSymbols(HashMap<String, HashMap> matMap0) {
+	private void convertToSymbols(HashMap<String, HashMap> matMap0) {
 
 		for (String excentricity : matMap0.keySet()) {
 
@@ -67,17 +70,22 @@ public class V1_Populate  {
 		}
 	}
 
-	private static byte[] sendFovea() {
+	private byte[] sendFovea() {
 		try {
 			String excentricity0 = "FOVEA";
 			SymbolMatrix currentMatrix = excentricityMap.get(excentricity0);
-			LongSpike spike = new LongSpike(currentMatrix, V1_Populate.eventIndex);
-			
-			return spike.getByteArray();
+
 		} catch (IOException ex) {
 			Logger.getLogger(V1_Populate.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		return null;
+	}
+
+	@Override
+	public byte[] getData() {
+		LongSpike spike = new LongSpike(currentMatrix, V1_Populate.eventIndex);
+
+		return spike.getByteArray();
 	}
 
 }
